@@ -24,16 +24,14 @@ pipeline {
         stage ('Deployments'){
             parallel{
                 stage ('Deploy to Staging'){
-                    
                     steps {
-                        bat "set Path=%Path%;C:\\Users\\Juan\\Downloads\\tomcat-demo.pem"
-                        bat "scp -i "tomcat-server-kp.ppk" **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat8/webapps"
+                        bat "winscp -i C:\\Users\\Juan\\Downloads\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
                     }
                 }
 
                 stage ("Deploy to Production"){
                     steps {
-                        bat "scp -i C:/Users/Juan/Downloads/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+                        bat "winscp -i C:\\Users\\Juan\\Downloads\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
                     }
                 }
             }
