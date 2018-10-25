@@ -11,7 +11,7 @@ pipeline {
     stages{
         stage('Build'){
             steps {
-                sh '/Users/JuanHernandez/Documents/Java/apache-maven-3.5.4/bin/mvn clean package'
+                bat 'mvn clean package'
             }
             post {
                 success {
@@ -20,18 +20,18 @@ pipeline {
                 }
             }
         }
-
+ 
         stage ('Deployments'){
             parallel{
                 stage ('Deploy to Staging'){
                     steps {
-                        sh "scp -i /home/Jenkins/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
+                        bat "winscp -i C:\\Users\\Juan\\Downloads\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_dev}:/var/lib/tomcat7/webapps"
                     }
                 }
-
+ 
                 stage ("Deploy to Production"){
                     steps {
-                        sh "scp -i /home/Jenkins/tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
+                        bat "winscp -i C:\\Users\\Juan\\Downloads\\tomcat-demo.pem **/target/*.war ec2-user@${params.tomcat_prod}:/var/lib/tomcat7/webapps"
                     }
                 }
             }
